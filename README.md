@@ -1,4 +1,4 @@
-# _Infra Challenge 20240202
+# Infra Challenge 20240202
 
 ## _Descrição do Projeto_
 
