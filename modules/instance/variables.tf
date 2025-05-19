@@ -20,7 +20,7 @@ variable "instance_type" {
 
 variable "repo" {
   description = "Repositorio da aplicação"
-  default     = "https://github.com/pauloxm/Terraform-AWS"
+  default     = "https://github.com/pauloxm/devops-challence-20240202"
 }
 
 variable "ssh_user" {
