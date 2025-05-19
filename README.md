@@ -114,63 +114,60 @@ A branch __main__ estão os arquivos do projeto principal. Nele estão os arquiv
 │   ├── instance/                 # Subsdiretório de criação da estrutura na AWS
 │   │   ├── ec2.tf                # Arquivo com as instruções de criação da instancia
 │   │   ├── network.tf            # Arquivo com as instruções de criação de rede, security group e ingress rules
-│   │   ├── output.tf             # Arquivo com o output "instance_ip" que será importado e apresentado no arquivo output.tf do módulo principal.
-│   │   └── variables.tf          # Arqivo com a declaração das variáveis que serão utilizadas no módulo.
+│   │   ├── output.tf             # Arquivo com o output "instance_ip" que será importado e apresentado no arquivo output.tf do módulo principal
+│   │   └── variables.tf          # Arqivo com a declaração das variáveis que serão utilizadas no módulo
 │   │
 ├── roles                         # Diretório com as roles do Ansible
-│   ├── Basic/                    #
-│   │   ├── defaults              #
-│   │   |   ├── main.yml          #
-│   │   ├── handlers              #
-│   │   |   ├── main.yml          #
-│   │   ├── meta                  #
-│   │   |   ├── main.yml          #
-│   │   ├── tasks                 #
-│   │   |   ├── main.yml          #
-│   │   ├── tests                 #
-│   │   |   ├── minventory        #
-│   │   |   ├── test.yml          #
-│   │   ├── vars                  #
-│   │   |   ├── main.yml          #
-│   │   └── README.md             #
+│   ├── Basic/                    # Diretório Basic (Role Basic)
+│   │   ├── defaults              # Subdiretório defaults
+│   │   |   ├── main.yml          # Criado pelo ansible-galaxy, sem utilização
+│   │   ├── handlers              # Subdiretório handlers
+│   │   |   ├── main.yml          # Arquivo com processos dependentes, só serão acionados mediante condição satisfeita nas tarefas principais
+│   │   ├── meta                  # Subdiretório meta
+│   │   |   ├── main.yml          # Criado pelo ansible-galaxy, sem utilização
+│   │   ├── tasks                 # Subdiretório tasks
+│   │   |   ├── main.yml          # Arquivo com as tarefas de instalação do pacote do python e habilitar o UFW com as regras requeridas no projeto
+│   │   ├── tests                 # Subdiretório tests
+│   │   |   ├── minventory        # Criado pelo ansible-galaxy, sem utilização
+│   │   |   ├── test.yml          # Criado pelo ansible-galaxy, sem utilização
+│   │   └── vars                  # Subdiretório vars
+│   │        └─ main.yml          # Criado pelo ansible-galaxy, sem utilização
 │   │
-│   ├── Nginx/                    #
-│   │   ├── defaults              #
-│   │   |   ├── main.yml          #
-│   │   ├── handlers              #
-│   │   |   ├── main.yml          #
-│   │   ├── meta                  #
-│   │   |   ├── main.yml          #
-│   │   ├── tasks                 #
-│   │   |   ├── main.yml          #
-│   │   ├── tests                 #
-│   │   |   ├── minventory        #
-│   │   |   ├── test.yml          #
-│   │   ├── vars                  #
-│   │   |   ├── main.yml          #
-│   │   └── README.md             #
+│   ├── Nginx/                    # Diretório Nginx (Role Nginx)
+│   │   ├── defaults              # Subdiretório defaults
+│   │   |   ├── main.yml          # Criado pelo ansible-galaxy, sem utilização
+│   │   ├── handlers              # Subdiretório handlers
+│   │   |   ├── main.yml          # Arquivo com processos dependentes, só serão acionados mediante condição satisfeita nas tarefas principais
+│   │   ├── meta                  # Subdiretório meta
+│   │   |   ├── main.yml          # Criado pelo ansible-galaxy, sem utilização
+│   │   ├── tasks                 # Subdiretório tasks
+│   │   |   ├── main.yml          # Arquivo com as tarefas de instalação e configuração do Nginx e certificado SSL auto assinado
+│   │   ├── tests                 # Subdiretório tests
+│   │   |   ├── minventory        # Criado pelo ansible-galaxy, sem utilização
+│   │   |   ├── test.yml          # Criado pelo ansible-galaxy, sem utilização
+│   │   └── vars                  # Subdiretório vars
+│   │       └── main.yml          # Arquivo com a declaração de variável com o caminho do arquivo de configuração do Nginx
 │   │
-│   ├── Security/                 #
-│   │   ├── defaults              #
-│   │   |   ├── main.yml          #
-│   │   ├── handlers              #
-│   │   |   ├── main.yml          #
-│   │   ├── meta                  #
-│   │   |   ├── main.yml          #
-│   │   ├── tasks                 #
-│   │   |   ├── main.yml          #
-│   │   ├── tests                 #
-│   │   |   ├── minventory        #
-│   │   |   ├── test.yml          #
-│   │   ├── vars                  #
-│   │       ├── main.yml          #
-│   └─────── README.md            #
+│   └── Security/                 # Diretório Security (Role Security)
+│       ├── defaults              # Subdiretório defaults
+│       |   ├── main.yml          # Criado pelo ansible-galaxy, sem utilização
+│       ├── handlers              # Subdiretório handlers
+│       |   ├── main.yml          # Arquivo com processos dependentes, só serão acionados mediante condição satisfeita nas tarefas principais
+│       ├── meta                  # Subdiretório meta
+│       |   ├── main.yml          # Criado pelo ansible-galaxy, sem utilização
+│       ├── tasks                 # Subdiretório tasks
+│       |   ├── main.yml          # Arquivo com as tarefas de instalação do fail2ban e parametrizações de segurança do SSH Server
+│       ├── tests                 # Subdiretório tests
+│       |   ├── minventory        # Criado pelo ansible-galaxy, sem utilização
+│       |   ├── test.yml          # Criado pelo ansible-galaxy, sem utilização
+│       └── vars                  # Subdiretório vars
+│           └── main.yml          # Arquivo com a declaração de variável com o caminho do arquivo de configuração do ssh
 │
 ├── backend.tf                    # Arquivo com as instruções de conexão com o provider, requisito de versão do Terraform e a declaração das tags padrão
 ├── main.tf                       # Arquivo responsável por realizar a chamada do módulo 'instance'
-├── outputs.tf                    # Arquivo com o output "instance_public_ip" que será o valor importado do arquivo output.tf do módulo 'instance'.
-├── playbook.yml                  # Arquivo principal com a chamada das Roles do Ansible: Basic, Nginx e Security.
-├── variables.tf                  # Arqivo com a declaração das variáveis que serão utilizadas no módulo.
+├── outputs.tf                    # Arquivo com o output "instance_public_ip" que será o valor importado do arquivo output.tf do módulo 'instance'
+├── playbook.yml                  # Arquivo principal com a chamada das Roles do Ansible: Basic, Nginx e Security
+├── variables.tf                  # Arqivo com a declaração das variáveis que serão utilizadas no módulo
 └── README.md                     # Arquivo com a documentação do projeto
 ```
 
