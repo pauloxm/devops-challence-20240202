@@ -1,0 +1,3 @@
+---
+# vars file for Nginx
+nginx_html_folder: "/var/www/html"

@@ -1,0 +1,7 @@
+---
+# handlers file for Security
+- name: "Reinicia SSH"
+  service: 
+    name: ssh 
+    state: reloaded
+    enabled: yes

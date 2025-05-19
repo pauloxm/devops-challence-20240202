@@ -1,0 +1,47 @@
+---
+# tasks file for Security
+- name: "Garante o fail2ban"
+  apt:
+    update_cache: yes
+    name:
+      - fail2ban
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: "Garante o fail2ban em execucao"
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
+
+- name: "Atualiza parametros do SSH - PermitRootLogin"
+  ansible.builtin.lineinfile:
+    path: "{{ ssh_server_file }}"
+    regexp: '^#PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify:
+    - "Reinicia SSH"
+
+- name: "Atualiza parametros do SSH - PasswordAuthentication"
+  ansible.builtin.lineinfile:
+    path: "{{ ssh_server_file }}"
+    insertafter: "# Authentication:"
+    line: "PasswordAuthentication no"
+  notify:
+    - "Reinicia SSH"
+
+- name: "Atualiza parametros do SSH - MaxAuthTries"
+  ansible.builtin.lineinfile:
+    path: "{{ ssh_server_file }}"
+    regexp: "^#MaxAuthTries"
+    line: "MaxAuthTries 3"
+  notify:
+    - "Reinicia SSH"
+
+- name: "Atualiza parametros do SSH - LoginGraceTime"
+  ansible.builtin.lineinfile:
+    path: "{{ ssh_server_file }}"
+    regexp: "^#LoginGraceTime"
+    line: "LoginGraceTime 1m"
+  notify:
+    - "Reinicia SSH"

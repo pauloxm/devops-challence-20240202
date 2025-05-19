@@ -1,0 +1,3 @@
+---
+# vars file for Security
+ssh_server_file: "/etc/ssh/sshd_config"

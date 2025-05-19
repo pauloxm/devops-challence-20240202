@@ -1,0 +1,63 @@
+---
+# tasks file for Basic
+## Atividade relacionada ao repositorio
+- name: "Instala pacotes essenciais"
+  apt:
+    name: 
+      - python3
+    state: present
+  when: ansible_facts["os_family"] == "Debian"
+
+## Atividades relacionadas ao Firewall
+- name: "Instala UFW"
+  apt:
+    name:
+      - ufw
+    state: present
+  when: ansible_facts["os_family"] == "Debian"
+
+- name: "Habilita o UFW"
+  ufw:
+    state: enabled
+
+- name: "Habilita logging UFW"
+  ufw:
+    logging: 'on'
+
+- name: "Habilitar acesso SSH"
+  ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+    direction: in
+    comment: "INPUT - SSH - ALLOW"
+
+- name: "Habilitar acesso HTTP"
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+    direction: in
+    comment: "INPUT - HTTP - ALLOW"
+
+- name: "Habilitar acesso HTTPS"
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+    direction: in
+    comment: "INPUT - HTTPS - ALLOW"
+
+- name: "Regra input default - DROP"
+  ufw:
+    state: enabled
+    direction: incoming
+    policy: deny
+    comment: "INPUT - DEFAULT - DENY"
+
+- name: "Regra outgoing default - ACCEPT"
+  ufw:
+    state: enabled
+    direction: outgoing
+    policy: allow
+    comment: "OUTPUT - DEFAULT - ALLOW"

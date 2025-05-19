@@ -1,0 +1,61 @@
+---
+# tasks file for Nginx
+- name: "Garante o Nginx"
+  apt:
+    update_cache: yes
+    name:
+      - nginx
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: "Checa se a chave privada existe"
+  stat:
+    path: /etc/ssl/private/private.key
+  register: private_file_status
+
+- name: "Gerando chave privada"
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/private/private.key
+  notify:
+    - "Gerando CSR para o certificado auto assinado"
+    - "Gerando certificado auto assinado"
+  when: not private_file_status.stat.exists
+
+- name: "Atualiza parametro server_token"
+  ansible.builtin.replace:
+    path: /etc/nginx/nginx.conf
+    regexp: '# server_tokens off;'
+    replace: 'server_tokens off;'
+
+- name: "Garante o Nginx em execucao"
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: "Copia Arquivo server.conf"
+  template:
+    src: templates/server.conf
+    dest: "/etc/nginx/sites-enabled/server.conf"
+    owner: root
+    group: root
+    mode: u=rw,g=rw,o=r
+    force: true
+
+- name: "Copia Arquivo index.html"
+  template:
+    src: templates/index.html
+    dest: "{{ nginx_html_folder }}/index.html"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: "Remove arquivo index default do Nginx"
+  file:
+    path: "{{ nginx_html_folder }}/index.nginx-debian.html"
+    state: absent
+
+- name: "Remove arquivo default do Nginx"
+  file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent

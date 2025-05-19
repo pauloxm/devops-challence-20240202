@@ -1,0 +1,31 @@
+---
+# handlers file for Nginx
+- name: "Reinicia Nginx"
+  service: 
+    name: nginx 
+    state: restarted 
+    enabled: yes
+
+- name: "Gerando CSR para o certificado auto assinado"
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: /etc/ssl/private/private.key
+    country_name: "BR"
+    state_or_province_name: "RN"
+    locality_name: "Parnamirim"
+    email_address: "pauloxmachado@gmail.com"
+    common_name: "example.com"
+    organization_name: "Paulo Xavier"
+    organizational_unit_name: "Setor de TI"
+    subject_alt_name:
+      - "DNS:site.example.com"
+      - "DNS:www.site.example.com"
+  register: csr
+  notify:
+    - "Reinicia Nginx"
+
+- name: "Gerando certificado auto assinado"
+  community.crypto.x509_certificate:
+    path: /etc/ssl/certs/certificado.pem
+    csr_content: "{{ csr.csr }}"
+    privatekey_path: /etc/ssl/private/private.key
+    provider: selfsigned
