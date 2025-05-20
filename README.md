@@ -90,6 +90,24 @@ Provisionando na AWS
 terraform apply plan.out
 ```
 
+### Execução Automatizada (Github Actions)
+
+Primeiramente será necessário criar as secrets necessárias para execução da Pipeline. Segue abaixo as secrets necessárias a serem criadas:
+
+> TF_VERSION
+> AWS_ACCESS_KEY_ID
+> AWS_SECRET_ACCESS_KEY
+> AWS_REGION
+
+![Passo 01 - Para adicionar as secrets](base/001.png)
+
+![Passo 02 - Acrescentando a secret](base/002.png)
+
+![Passo 03 - Preenchendo nome e valor da secret](base/003.png)
+
+![Passo 04 - Visualizando secrets criadas](base/004.png)
+
+Após isto, basta fazer o commit dos arquivos mantendo a estrutura de diretório para a Pipeline do Github.
 
 ## Como Utilizar o Projeto
 
