@@ -9,11 +9,11 @@ terraform {
   }
 
   # Opcional: Caso crie o bucket referenciado na branch 'Bucket' então descomente as linhas abaixo:
-  #  backend "remote-state-s3"{
-  #    bucket = "prxm-remote-state"
-  #    key = "instance/terraform.tfstate"
-  #    region = "us-east-1"
-  #  }
+   backend "remote-state-s3"{
+     bucket = "prxm-remote-state"
+     key = "instance/terraform.tfstate"
+     region = "us-east-1"
+   }
 }
 
 provider "aws" {
