@@ -10,7 +10,7 @@ terraform {
 
   # Opcional: Caso crie o bucket referenciado na branch 'Bucket' então descomente as linhas abaixo:
    backend "s3"{
-     bucket = "prxm-remote-state"
+     bucket = "devops-challence-20240202-prxm-remote-state"
      key = "instance/terraform.tfstate"
      region = "us-east-1"
    }
